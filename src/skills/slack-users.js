@@ -6,8 +6,8 @@ module.exports = (controller) => {
     getUserInfo(bot, message, message.user)
   })
 
-  controller.hears([/who <@(.*?)> is\?/i, /who is <@(.*?)>\s*\?*/i], ['direct_message','direct_mention','mention'], (bot,message) => {
-    getUserInfo(bot, message, match[1])
+  controller.hears([/who <@(.*?)> is\?/i, /who is <@(.*?)>\s*\?*/i], ['direct_message','direct_mention','mention'], (bot, message) => {
+    getUserInfo(bot, message, message.match[1])
   });
 
   logger.info('Loaded slack-users skill')
