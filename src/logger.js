@@ -9,14 +9,14 @@ module.exports = {
     }
   },
 
-  debug: (message) => logMessage(0, message),
-  info: (message) => logMessage(1, message),
-  warn: (message) => logMessage(2, message),
-  error: (message) => logMessage(3, message)
+  debug: function () { logMessage(0, arguments) },
+  info: function () { logMessage(1, arguments) },
+  warn: function () { logMessage(2, arguments) },
+  error: function () { logMessage(3, arguments) }
 }
 
-const logMessage = (level, message) => {
+const logMessage = (level, data) => {
   if (level >= currentLevel) {
-    console.log(`[${new Date().toISOString()}] [${logLevels[level]}] ${message}`)
+    console.log.apply(null, [`[${new Date().toISOString()}] [${logLevels[level]}]`, ...data])
   }
 }
