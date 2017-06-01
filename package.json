@@ -1,0 +1,15 @@
+{
+  "name": "jarvis",
+  "version": "0.1.0",
+  "description": "A slack bot.",
+  "main": "jarvis.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Allan Stewart",
+  "license": "MIT",
+  "dependencies": {
+    "botkit": "^0.5.4"
+  },
+  "private": true
+}
