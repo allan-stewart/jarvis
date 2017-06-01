@@ -19,26 +19,28 @@ controller.hears([/debug/], ['direct_message','direct_mention','mention'], (bot,
   })
 })
 
-const getUserInfo = (bot, message, user) => {
-  bot.api.users.info({user}, (error, userInfo) => {
-    let profile = userInfo.user.profile
+const getUserInfo = (bot, message, userId) => {
+  bot.api.users.info({user: userId}, (error, userInfo) => {
+    let user = userInfo.user
+    let profile = user.profile
 
-    let replyInfo = `Email: ${profile.email}`
-    if (profile.title) replyInfo += `\nTitle: ${profile.title}`
-    if (profile.phone) replyInfo += `\nPhone: ${profile.phone}`
-    if (profile.status_emoji || profile.status_text) replyInfo += `\nStatus: ${profile.status_emoji} ${(profile.status_text || '')}`
-    replyInfo += `\nTimezone: ${userInfo.user.tz} (${userInfo.user.tz_label})`
-    replyInfo += `Color: #${userInfo.user.color}`
+    let replyInfo = `*Email:* ${profile.email}`
+    if (profile.title) replyInfo += `\n*Title:* ${profile.title}`
+    if (profile.phone) replyInfo += `\n*Phone:* ${profile.phone}`
+    if (profile.status_emoji || profile.status_text) replyInfo += `\n*Status:* ${profile.status_emoji} ${(profile.status_text || '')}`
+    replyInfo += `\n*Timezone:* ${user.tz} (${user.tz_label})`
+    replyInfo += `\n*Slack Id:* ${user.id}`
+    replyInfo += `\n*Color:* #${user.color}`
 
     bot.reply(message, {
       text: '',
       attachments: [
         {
-          pretext: `${userInfo.user.real_name}`,
-          fallback: `${userInfo.user.real_name}.`,
+          pretext: `${user.real_name}`,
+          fallback: `${user.real_name}.`,
           text: replyInfo,
           mrkdwn_in: ["text"],
-          color: `#${userInfo.user.color}`
+          color: `#${user.color}`
         }
       ]
     })
