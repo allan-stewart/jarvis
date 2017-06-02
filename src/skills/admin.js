@@ -34,6 +34,8 @@ module.exports = (controller, skillData) => {
           }
         ]
       })
+    } else {
+      bot.reply(message, "I'm afraid you do not have the privilages to do that.")
     }
   })
 

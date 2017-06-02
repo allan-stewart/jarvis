@@ -1,8 +1,15 @@
 const logger = require('../logger')
+const admins = require('../admins')
 
 module.exports = (controller, skillData) => {
 
   controller.hears([/debug message/], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
+    admin = admins.getAdmin(message.user)
+    if (!admin) {
+      bot.reply(message, "I'm afraid you do not have permission to do that.")
+      return
+    }
+
     logger.info(JSON.stringify(message))
 
     bot.reply(message, {
