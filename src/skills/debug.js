@@ -1,6 +1,6 @@
 const logger = require('../logger')
 
-module.exports = (controller) => {
+module.exports = (controller, skillData) => {
 
   controller.hears([/debug message/], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
     logger.info(JSON.stringify(message))
@@ -16,6 +16,8 @@ module.exports = (controller) => {
       ]
     })
   })
+
+  skillData.restrictedCommand('debug a message: include `debug message` in your message')
 
   logger.info('Loaded debug skill')
 }

@@ -1,6 +1,6 @@
 const logger = require('../logger')
 
-module.exports = (controller) => {
+module.exports = (controller, skillData) => {
 
   controller.hears([/who am i\?$/i, /who i am\?$/i], ['direct_message','direct_mention','mention'], (bot, message) => {
     getUserInfo(bot, message, message.user)
@@ -9,6 +9,8 @@ module.exports = (controller) => {
   controller.hears([/who <@(.*?)> is\?/i, /who is <@(.*?)>\s*\?*/i], ['direct_message','direct_mention','mention'], (bot, message) => {
     getUserInfo(bot, message, message.match[1])
   });
+
+  skillData.publicCommand('get user information: `who am I?` or `who is <@user>`')
 
   logger.info('Loaded slack-users skill')
 }

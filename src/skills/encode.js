@@ -1,7 +1,7 @@
 const logger = require('../logger')
 const slackEncoder = require('../slack-encoder')
 
-module.exports = (controller) => {
+module.exports = (controller, skillData) => {
 
   controller.hears([/base64 encode (.*)$/i,], ['direct_message','direct_mention'], (bot, message) => {
     transform(bot, message, message.match[1], x => Buffer.from(x).toString('base64'))
@@ -18,6 +18,9 @@ module.exports = (controller) => {
   controller.hears([/url decode (.*)$/i,], ['direct_message','direct_mention'], (bot, message) => {
     transform(bot, message, message.match[1], decodeURIComponent)
   })
+
+  skillData.publicCommand('encode/decode base64: `base64 <encode|decode> <string>`')
+  skillData.publicCommand('encode/decode urls: `url <encode|decode> <string>`')
 
   logger.info('Loaded slack-users skill')
 }
