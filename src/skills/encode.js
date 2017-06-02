@@ -3,19 +3,19 @@ const slackEncoder = require('../slack-encoder')
 
 module.exports = (controller) => {
 
-  controller.hears([/encode base64 (.*)$/i,], ['direct_message','direct_mention'], (bot, message) => {
+  controller.hears([/base64 encode (.*)$/i,], ['direct_message','direct_mention'], (bot, message) => {
     transform(bot, message, message.match[1], x => Buffer.from(x).toString('base64'))
   })
 
-  controller.hears([/decode base64 (.*)$/i,], ['direct_message','direct_mention'], (bot, message) => {
+  controller.hears([/base64 decode (.*)$/i,], ['direct_message','direct_mention'], (bot, message) => {
     transform(bot, message, message.match[1], (x) => Buffer.from(x, 'base64').toString('utf8'))
   })
 
-  controller.hears([/encode url (.*)$/i,], ['direct_message','direct_mention'], (bot, message) => {
+  controller.hears([/url encode (.*)$/i,], ['direct_message','direct_mention'], (bot, message) => {
     transform(bot, message, message.match[1], encodeURIComponent)
   })
 
-  controller.hears([/decode url (.*)$/i,], ['direct_message','direct_mention'], (bot, message) => {
+  controller.hears([/url decode (.*)$/i,], ['direct_message','direct_mention'], (bot, message) => {
     transform(bot, message, message.match[1], decodeURIComponent)
   })
 
