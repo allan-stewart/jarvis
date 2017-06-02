@@ -35,10 +35,10 @@ const getUserInfo = (bot, message, userId) => {
       text: '',
       attachments: [
         {
-          pretext: `${user.real_name}`,
+          pretext: `*${user.real_name}*`,
           fallback: `${user.real_name}.`,
           text: replyInfo.join('\n'),
-          mrkdwn_in: ['text'],
+          mrkdwn_in: ['pretext', 'text'],
           color: `#${user.color}`
         }
       ]
