@@ -4,6 +4,7 @@
   "description": "A slack bot.",
   "main": "jarvis.js",
   "scripts": {
+    "start": "node jarvis",
     "test": "mocha -w --recursive"
   },
   "author": "Allan Stewart",
