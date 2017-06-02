@@ -1,4 +1,5 @@
 const fileSystem = require('fs')
+const admins = require('./admins')
 
 let commands = []
 
@@ -12,7 +13,10 @@ exports.load = (controller) => {
   files.forEach(x => require(`./skills/${x}`)(controller, skillData))
 
   controller.hears([/help/i, /what can you do/i], ['direct_message','direct_mention','mention'], (bot, message) => {
-    let text = commands.filter(x => !x.restricted).map(x => x.command).join('\n')
+    let admin = admins.getAdmin(message.user)
+    let showRestricted = !!admin && message.event == 'direct_message'
+    let filtered = showRestricted ? commands : commands.filter(x => !x.restricted)
+    let text = filtered.map(x => x.command).join('\n')
 
     bot.reply(message, {
       text: '',
