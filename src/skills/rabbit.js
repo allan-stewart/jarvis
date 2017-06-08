@@ -22,7 +22,7 @@ module.exports = (controller, skillData) => {
     addAlias(bot, message, name, alias)
   })
 
-  controller.hears([/list all rabbit environments/i], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
+  controller.hears([/list rabbit environments/i], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
     getRabbitConfigs(bot, messsage)
   })
 
@@ -52,6 +52,12 @@ module.exports = (controller, skillData) => {
     let minutes = message.match[3]
     monitorMatchingQueues(bot, message, env, pattern, minutes, x => x.name.endsWith(pattern))
   })
+
+  skillData.restrictedCommand('add a rabbit environment: `add rabbit named <name> at url <url> with username <username> and password <password>`')
+  skillData.restrictedCommand('add a rabbit alias: `alias rabbit <name> as <alias>`')
+  skillData.publicCommand('get known rabbit environments: `list rabbit environments`')
+  skillData.publicCommand('get the recent status of a rabbit queue: `get status of <environmentName> rabbit queue <queueName>[ for the last <integer> minutes]`')
+  skillData.publicCommand('temporarily monitor rabbit queues: `monitor <environmentName> rabbit queues <matching|ending with> <name> for <integer> minutes`')
 }
 
 const addRabbitEnvironment = (bot, message, config) => {
