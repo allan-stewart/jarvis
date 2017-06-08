@@ -1,8 +1,6 @@
 const logger = require('../logger')
 const admins = require('../admins')
 
-let respectedUsers = []
-
 module.exports = (controller, skillData) => {
   controller.hears([/make <@(.*?)> an admin with the honorific (sir|maam)$/], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
     let admin = admins.getAdmin(message.user)
