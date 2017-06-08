@@ -4,6 +4,7 @@ const version = require('./package.json').version
 const logger = require('./src/logger')
 const skillsLoader = require('./src/skills-loader')
 const admins = require('./src/admins')
+const rabbit = require('./src/rabbit')
 
 logger.setLogLevel(config.logLevel)
 
@@ -15,6 +16,7 @@ const controller = Botkit.slackbot({
 })
 
 admins.load(controller)
+rabbit.load(controller)
 skillsLoader.load(controller)
 
 let bot = controller.spawn({
