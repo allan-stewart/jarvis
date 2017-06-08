@@ -8,6 +8,9 @@ module.exports = {
       currentLevel = 1
     }
   },
+  disable: () => {
+    currentLevel = logLevels.length
+  },
 
   debug: function () { logMessage(0, arguments) },
   info: function () { logMessage(1, arguments) },
