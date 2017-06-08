@@ -1,4 +1,3 @@
-const logger = require('../logger')
 const version = require('../../package.json').version
 const admins = require('../admins')
 
@@ -11,6 +10,4 @@ module.exports = (controller, skillData) => {
   })
 
   skillData.publicCommand('get my current version: `version`')
-
-  logger.info('Loaded version skill')
 }

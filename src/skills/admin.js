@@ -1,4 +1,3 @@
-const logger = require('../logger')
 const admins = require('../admins')
 
 module.exports = (controller, skillData) => {
@@ -39,6 +38,4 @@ module.exports = (controller, skillData) => {
 
   skillData.restrictedCommand('grant admin privilages: `make <@user> an admin with the honorific <sir|maam>`')
   skillData.restrictedCommand('list admins: `list admins`')
-
-  logger.info('Loaded admin skill')
 }

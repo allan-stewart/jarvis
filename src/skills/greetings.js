@@ -1,4 +1,3 @@
-const logger = require('../logger')
 const version = require('../../package.json').version
 const admins = require('../admins')
 
@@ -15,6 +14,4 @@ module.exports = (controller, skillData) => {
     let text = admin ? `For you, ${admin.honorific}, always.` : `Indeed. It appears I am currently operational.`
     bot.reply(message, text)
   })
-
-  logger.info('Loaded greetings skill')
 }

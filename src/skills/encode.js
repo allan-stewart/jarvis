@@ -1,4 +1,3 @@
-const logger = require('../logger')
 const slackEncoder = require('../slack-encoder')
 
 module.exports = (controller, skillData) => {
@@ -21,12 +20,9 @@ module.exports = (controller, skillData) => {
 
   skillData.publicCommand('encode/decode base64: `base64 <encode|decode> <string>`')
   skillData.publicCommand('encode/decode urls: `url <encode|decode> <string>`')
-
-  logger.info('Loaded slack-users skill')
 }
 
 const transform = (bot, message, match, transformer) => {
-  logger.info('transforming', match)
   var result = transformer(slackEncoder.decode(match))
   bot.reply(message, slackEncoder.encode(result))
 }

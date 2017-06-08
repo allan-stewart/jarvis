@@ -25,6 +25,4 @@ module.exports = (controller, skillData) => {
   })
 
   skillData.restrictedCommand('debug a message: include `debug message` in your message')
-
-  logger.info('Loaded debug skill')
 }

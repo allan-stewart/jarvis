@@ -1,5 +1,6 @@
 const fileSystem = require('fs')
 const admins = require('./admins')
+const logger = require('./logger')
 
 let commands = []
 
@@ -10,7 +11,10 @@ let skillData = {
 
 exports.load = (controller) => {
   files = fileSystem.readdirSync(`${__dirname}/skills`)
-  files.forEach(x => require(`./skills/${x}`)(controller, skillData))
+  files.forEach(x => {
+    require(`./skills/${x}`)(controller, skillData)
+    logger.info(`Loaded skill: ${x}`)
+  })
 
   controller.hears([/help/i, /what can you do/i], ['direct_message','direct_mention','mention'], (bot, message) => {
     let admin = admins.getAdmin(message.user)
