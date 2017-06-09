@@ -1,4 +1,5 @@
 const admins = require('../admins')
+const colors = require('../colors')
 
 module.exports = (controller, skillData) => {
   controller.hears([/make <@(.*?)> an admin with the honorific (sir|maam)$/], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
@@ -27,7 +28,7 @@ module.exports = (controller, skillData) => {
           {
             text: allAdmins.map(x => `<@${x.userId}> (${x.honorific})`).join('\n'),
             mrkdwn_in: ['text'],
-            color: `#add8e6`
+            color: colors.default
           }
         ]
       })

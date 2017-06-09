@@ -1,5 +1,6 @@
 const logger = require('../logger')
 const admins = require('../admins')
+const colors = require('../colors')
 
 module.exports = (controller, skillData) => {
 
@@ -18,7 +19,7 @@ module.exports = (controller, skillData) => {
         {
           fallback: 'Message details have been written to my log.',
           text: 'Message details have been written to my log.',
-          color: '#add8e6'
+          color: colors.default
         }
       ]
     })

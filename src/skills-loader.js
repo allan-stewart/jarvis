@@ -1,6 +1,7 @@
 const fileSystem = require('fs')
 const admins = require('./admins')
 const logger = require('./logger')
+const colors = require('./colors')
 
 let commands = []
 
@@ -28,7 +29,7 @@ exports.load = (controller) => {
         {
           fallback: 'J.A.R.V.I.S. help commands...',
           text: text,
-          color: '#add8e6',
+          color: colors.default,
           mrkdwn_in: ['text']
         }
       ]

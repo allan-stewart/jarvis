@@ -4,6 +4,7 @@ const rabbit = require('../rabbit')
 const slackEncoder = require('../slack-encoder')
 const intervalHelper = require('../interval-helper')
 const monitoring = require('../rabbit-monitoring-helper')
+const colors = require('../colors')
 
 module.exports = (controller, skillData) => {
   controller.hears([/add rabbit named (.*) at url <(.*)> with username (.*) and password (.*)$/i], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
@@ -75,7 +76,7 @@ const addRabbitEnvironment = (bot, message, config) => {
         pretext: `The Rabbit environment has been added, ${admin.honorific}.`,
         text: '```' + JSON.stringify(rabbit.getConfig(config.name), null, 2) + '```',
         mrkdwn_in: ['text'],
-        color: `#add8e6`
+        color: colors.default
       }
     ]
   })
@@ -96,7 +97,7 @@ const addAlias = (bot, message, name, alias) => {
         pretext: `The Rabbit alias has been added, ${admin.honorific}.`,
         text: '```' + JSON.stringify(rabbit.getConfig(name), null, 2) + '```',
         mrkdwn_in: ['text'],
-        color: `#add8e6`
+        color: colors.default
       }
     ]
   })
@@ -116,7 +117,7 @@ const getRabbitConfigs = (bot, message) => {
         pretext: `Current Rabbit environments:`,
         text: '```' + JSON.stringify(configs, null, 2) + '```',
         mrkdwn_in: ['text'],
-        color: `#add8e6`
+        color: colors.default
       }
     ]
   })
@@ -149,7 +150,7 @@ const replyQueueDetails = (bot, message, data) => {
       {
         text: lines.join('\n'),
         mrkdwn_in: ['text'],
-        color: `#add8e6`
+        color: colors.default
       }
     ]
   })
@@ -230,7 +231,7 @@ const replyMonitoringResults = (bot, message, aggregateData) => {
         fallback: `Rabbit data provided via attachment.`,
         text: lines.join('\n'),
         mrkdwn_in: ['text'],
-        color: `#add8e6`
+        color: colors.default
       }
     ]
   })
