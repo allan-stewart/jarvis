@@ -23,7 +23,7 @@ module.exports = (controller, skillData) => {
   })
 
   controller.hears([/list rabbit environments/i], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
-    getRabbitConfigs(bot, messsage)
+    getRabbitConfigs(bot, message)
   })
 
   controller.hears([/get status of (.*) rabbit queue ([^\s]*) for the last (\d+) minutes/i], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
