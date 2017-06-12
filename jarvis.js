@@ -23,9 +23,19 @@ let bot = controller.spawn({
   token: config.slackbotToken
 });
 
-bot.startRTM((error, bot, payload) => {
-  if (error) {
-    logger.error('Unexpected error:', err)
-  }
-  logger.debug('startRTM payload:', payload)
-});
+const startRTM = () => {
+  bot.startRTM((error, bot, payload) => {
+    if (error) {
+      logger.error('Unexpected error starting RTM:', err)
+      setTimeout(startRTM, 60000)
+    }
+    logger.debug('startRTM payload:', payload)
+  });
+}
+
+controller.on('rtm_close', (bot, error) => {
+  logger.debug('RTM connection closed; restarting...')
+  setTimeout(startRTM, 5000)
+})
+
+startRTM()
