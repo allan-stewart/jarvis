@@ -36,9 +36,16 @@ module.exports = (controller, skillData) => {
     })
   })
 
+  controller.hears([/generate (\d+) random bytes in (hex|hexadecimal|base64)/i,], ['direct_message','direct_mention','mention'], (bot, message) => {
+    let count = parseInt(message.match[1], 10)
+    let output = message.match[2]
+    bot.reply(message, `${random.generateBytes(count).toString(output)}`)
+  })
+
   skillData.publicCommand('generate a random decimal number: `random <number|float>[ between <min> and <max>]`')
   skillData.publicCommand('generate a random integer: `random <int|integer>[ between <min> and <max>]`')
   skillData.publicCommand('randomize into groups: `randomize into <int> groups: <comma-separated-list>`')
+  skillData.publicCommand('generate random bytes: `generate <int> random bytes in <hex|base64>`')
 }
 
 const groupArray = (array, numberOfGroups) => {

@@ -29,3 +29,7 @@ exports.shuffleArray = array => {
   }
   return result
 }
+
+exports.generateBytes = length => {
+  return crypto.randomBytes(length)
+}
