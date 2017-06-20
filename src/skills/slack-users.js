@@ -1,3 +1,5 @@
+const slackInfo = require('../slack-info')
+
 module.exports = (controller, skillData) => {
 
   controller.hears([/who am i\?$/i, /who i am\?$/i], ['direct_message','direct_mention','mention'], (bot, message) => {
@@ -7,6 +9,10 @@ module.exports = (controller, skillData) => {
   controller.hears([/who <@(.*?)> is\?/i, /who is <@(.*?)>\s*\?*/i], ['direct_message','direct_mention','mention'], (bot, message) => {
     getUserInfo(bot, message, message.match[1])
   });
+
+  controller.hears([/who are you\?*$/i, /who you are\?*$/i], ['direct_message','direct_mention','mention'], (bot, message) => {
+    getUserInfo(bot, message, slackInfo.getJarvisId())
+  })
 
   skillData.publicCommand('get user information: `who am I?` or `who is <@user>`')
 }

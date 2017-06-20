@@ -5,6 +5,7 @@ const logger = require('./src/logger')
 const skillsLoader = require('./src/skills-loader')
 const admins = require('./src/admins')
 const rabbit = require('./src/rabbit')
+const slackInfo = require('./src/slack-info')
 
 logger.setLogLevel(config.logLevel)
 
@@ -30,6 +31,7 @@ const startRTM = () => {
       setTimeout(startRTM, 60000)
     }
     logger.debug('startRTM payload:', payload)
+    slackInfo.setData(payload)
   });
 }
 
