@@ -91,6 +91,19 @@ const makeRequest = (requestData, callback) => {
   })
 }
 
+exports.getExchangeDetails = (envNameOrAlias, exchangeName, minutes, callback) => {
+  let config = getConfigOrThrow(envNameOrAlias)
+  let age = Math.floor(minutes * 60)
+  let incr = Math.floor(age / 2)
+  makeRequest(buildRequest(config, `/exchanges/%2F/${exchangeName}?msg_rates_age=${age}&msg_rates_incr=${incr}`), (error, data) => {
+    if (error) {
+      callback(error)
+      return
+    }
+    callback(null, exports.processExchangeData(data, minutes))
+  })
+}
+
 exports.getAllQueues = (envNameOrAlias, callback) => {
   let config = getConfigOrThrow(envNameOrAlias)
   makeRequest(buildRequest(config, `/queues/%2F?columns=name`), callback)
@@ -118,6 +131,17 @@ exports.getQueueDetails = (envNameOrAlias, queueName, minutes, callback) => {
     }
     callback(null, exports.processQueueData(data, minutes))
   })
+}
+
+exports.processExchangeData = (data, minutes) => {
+  let stats = data.message_stats
+
+  return {
+    name: data.name,
+    publishRate: stats ? stats.publish_in_details.avg_rate : 0,
+    messagesPublished: processSamples(stats ? stats.publish_in_details.samples : []),
+    intervalMinutes: minutes
+  }
 }
 
 exports.processQueueData = (data, minutes) => {

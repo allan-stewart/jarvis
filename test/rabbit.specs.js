@@ -94,6 +94,33 @@ describe('rabbit', () => {
   })
 
   describe('data processing', () => {
+    describe('processExchangeData', () => {
+      it('should process the data', () => {
+        let input = exampleExchangeData
+        let minutes = 10
+        let publishSamples = exampleExchangeData.message_stats.publish_in_details.samples
+        let expected = {
+          name: exampleExchangeData.name,
+          publishRate: exampleExchangeData.message_stats.publish_in_details.avg_rate,
+          messagesPublished: publishSamples[0].sample - publishSamples[2].sample,
+          intervalMinutes: minutes
+        }
+        assert.deepEqual(rabbit.processExchangeData(input, minutes), expected)
+      })
+
+      it('should not fail if there are no message_stats', () => {
+        let input = exampleExchangeDataWithoutMessageStats
+        let minutes = 2
+        let expected = {
+          name: exampleExchangeDataWithoutMessageStats.name,
+          publishRate: 0,
+          messagesPublished: 0,
+          intervalMinutes: minutes
+        }
+        assert.deepEqual(rabbit.processExchangeData(input, minutes), expected)
+      })
+    })
+
     describe('processQueueData', () => {
       it('should return the data we care about', () => {
         let input = exampleQueueData
@@ -131,6 +158,48 @@ describe('rabbit', () => {
     })
   })
 })
+
+const exampleExchangeData = {
+  "incoming":[],
+  "outgoing":[],
+  "message_stats":{
+    "publish":3,
+    "publish_details":{"rate":0.0,"samples":[{"sample":3,"timestamp":1497971100000},{"sample":1,"timestamp":1497970800000},{"sample":1,"timestamp":1497970500000}],"avg_rate":0.01,"avg":0.0},
+    "publish_in":27285,
+    "publish_in_details":{"rate":0.0,"samples":[{"sample":27285,"timestamp":1497971100000},{"sample":27283,"timestamp":1497970800000},{"sample":27283,"timestamp":1497970500000}],"avg_rate":0.0033333333333333335,"avg":27283.666666666668},
+    "publish_out":340016,
+    "publish_out_details":{"rate":0.0,"samples":[{"sample":340016,"timestamp":1497971100000},{"sample":339982,"timestamp":1497970800000},{"sample":339982,"timestamp":1497970500000}],"avg_rate":0.056666666666666664,"avg":339993.3333333333},
+    "ack":0,
+    "ack_details":{"rate":0.0,"samples":[{"sample":0,"timestamp":1497971100000},{"sample":0,"timestamp":1497970800000},{"sample":0,"timestamp":1497970500000}],"avg_rate":0.0,"avg":0.0},
+    "deliver_get":0,
+    "deliver_get_details":{"rate":0.0,"samples":[{"sample":0,"timestamp":1497971100000},{"sample":0,"timestamp":1497970800000},{"sample":0,"timestamp":1497970500000}],"avg_rate":0.0,"avg":0.0},
+    "confirm":1,
+    "confirm_details":{"rate":0.0,"samples":[{"sample":1,"timestamp":1497971100000},{"sample":1,"timestamp":1497970800000},{"sample":1,"timestamp":1497970500000}],"avg_rate":0.0,"avg":1.0},
+    "return_unroutable":0,
+    "return_unroutable_details":{"rate":0.0,"samples":[{"sample":0,"timestamp":1497971100000},{"sample":0,"timestamp":1497970800000},{"sample":0,"timestamp":1497970500000}],"avg_rate":0.0,"avg":0.0},
+    "redeliver":0,
+    "redeliver_details":{"rate":0.0,"samples":[{"sample":0,"timestamp":1497971100000},{"sample":0,"timestamp":1497970800000},{"sample":0,"timestamp":1497970500000}],"avg_rate":0.0,"avg":0.0}
+  },
+  "name":"ps.identity.user-signed-in.v1",
+  "vhost":"/",
+  "type":"fanout",
+  "durable":true,
+  "auto_delete":false,
+  "internal":false,
+  "arguments":{}
+}
+
+const exampleExchangeDataWithoutMessageStats = {
+  "incoming":[],
+  "outgoing":[],
+  "name":"ps.identity.user-signed-in.v1",
+  "vhost":"/",
+  "type":"fanout",
+  "durable":true,
+  "auto_delete":false,
+  "internal":false,
+  "arguments":{}
+}
 
 const exampleQueueData = {
   "name":"ps.monolith.useraccountupdated.v2=>ps.identity.listener",
