@@ -3,7 +3,7 @@ const admins = require('../admins')
 
 module.exports = (controller, skillData) => {
 
-  controller.hears([/version/], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
+  controller.hears([/version/i], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
     let admin = admins.getAdmin(message.user)
     let text = admin ? `I am currently at ${version}, ${admin.honorific}.` : `I am currently at ${version}`
     bot.reply(message, text)

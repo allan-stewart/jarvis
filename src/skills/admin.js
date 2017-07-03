@@ -2,7 +2,7 @@ const admins = require('../admins')
 const colors = require('../colors')
 
 module.exports = (controller, skillData) => {
-  controller.hears([/make <@(.*?)> an admin with the honorific (sir|maam)$/], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
+  controller.hears([/make <@(.*?)> an admin with the honorific (sir|maam)$/i], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
     let admin = admins.getAdmin(message.user)
     let check = admins.getAdmin(message.match[1])
 
@@ -18,7 +18,7 @@ module.exports = (controller, skillData) => {
     }
   })
 
-  controller.hears([/list admins/], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
+  controller.hears([/list admins/i], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
     let admin = admins.getAdmin(message.user)
     if (admin) {
       let allAdmins = admins.getAll()

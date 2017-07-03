@@ -4,7 +4,7 @@ const colors = require('../colors')
 
 module.exports = (controller, skillData) => {
 
-  controller.hears([/upgrade/], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
+  controller.hears([/upgrade/i], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
     let admin = admins.getAdmin(message.user)
     if (admin) {
       gitPull((wasSuccessful, gitMessage) => {

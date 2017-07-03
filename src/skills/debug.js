@@ -4,7 +4,7 @@ const colors = require('../colors')
 
 module.exports = (controller, skillData) => {
 
-  controller.hears([/debug message/], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
+  controller.hears([/debug message/i], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
     admin = admins.getAdmin(message.user)
     if (!admin) {
       bot.reply(message, "I'm afraid you do not have permission to do that.")
