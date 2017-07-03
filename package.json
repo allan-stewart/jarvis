@@ -5,12 +5,14 @@
   "main": "jarvis.js",
   "scripts": {
     "start": "node jarvis",
-    "test": "mocha -w --recursive"
+    "test": "mocha -w --recursive",
+    "forever": "forever start -o logs/stdout.log -e logs/stderr.log --minUptime 10000 --spinSleepTime 30000 jarvis.js"
   },
   "author": "Allan Stewart",
   "license": "MIT",
   "dependencies": {
-    "botkit": "^0.5.4"
+    "botkit": "^0.5.4",
+    "forever": "^0.15.3"
   },
   "private": true,
   "devDependencies": {
