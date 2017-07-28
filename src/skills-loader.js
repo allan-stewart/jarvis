@@ -20,19 +20,26 @@ exports.load = (controller) => {
   controller.hears([/help/i, /what can you do/i], ['direct_message','direct_mention','mention'], (bot, message) => {
     let admin = admins.getAdmin(message.user)
     let showRestricted = !!admin && message.event == 'direct_message'
-    let filtered = showRestricted ? commands : commands.filter(x => !x.restricted)
-    let text = filtered.map(x => x.command).join('\n')
+
+    let attachments = [buildCommandsAttachment(false)]
+    if (showRestricted) {
+      attachments.push(buildCommandsAttachment(true))
+    }
 
     bot.reply(message, {
       text: '',
-      attachments: [
-        {
-          fallback: 'J.A.R.V.I.S. help commands...',
-          text: text,
-          color: colors.default,
-          mrkdwn_in: ['text']
-        }
-      ]
+      attachments
     })
   });
+}
+
+const buildCommandsAttachment = (restricted) => {
+  let text = restricted ? '*Administrator commands:*\n' : ''
+  text += commands.filter(x => x.restricted == restricted).map(x => x.command).join('\n')
+  return {
+    fallback: 'J.A.R.V.I.S. commands...',
+    text: text,
+    color: restricted ? colors.restricted : colors.default,
+    mrkdwn_in: ['text']
+  }
 }
