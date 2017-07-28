@@ -70,8 +70,7 @@ module.exports = (controller, skillData) => {
   skillData.restrictedCommand('add a rabbit environment: `add rabbit named <name> at url <url> with username <username> and password <password>`')
   skillData.restrictedCommand('add a rabbit alias: `alias rabbit <name> as <alias>`')
   skillData.publicCommand('get known rabbit environments: `list rabbit environments`')
-  skillData.publicCommand('get the recent status of a rabbit exchange: `get status of <environmentName> rabbit exchange <exchangeName>[ for the last <integer> minutes]`')
-  skillData.publicCommand('get the recent status of a rabbit queue: `get status of <environmentName> rabbit queue <queueName>[ for the last <integer> minutes]`')
+  skillData.publicCommand('get the recent status of a rabbit exchange or queue: `get status of <environmentName> rabbit <exchange|queue> <name>[ for the last <integer> minutes]`')
   skillData.publicCommand('temporarily monitor rabbit queues: `monitor <environmentName> rabbit queues <matching|ending with> <name> for <integer> minutes`')
 }
 

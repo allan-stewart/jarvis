@@ -18,8 +18,7 @@ module.exports = (controller, skillData) => {
     transform(bot, message, message.match[1], decodeURIComponent)
   })
 
-  skillData.publicCommand('encode/decode base64: `base64 <encode|decode> <string>`')
-  skillData.publicCommand('encode/decode urls: `url <encode|decode> <string>`')
+  skillData.publicCommand('encode/decode: `<url|base64> <encode|decode> <string>`')
 }
 
 const transform = (bot, message, match, transformer) => {

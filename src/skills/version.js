@@ -8,6 +8,4 @@ module.exports = (controller, skillData) => {
     let text = admin ? `I am currently at ${version}, ${admin.honorific}.` : `I am currently at ${version}`
     bot.reply(message, text)
   })
-
-  skillData.publicCommand('get my current version: `version`')
 }

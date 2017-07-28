@@ -47,8 +47,7 @@ module.exports = (controller, skillData) => {
     bot.reply(message, `${uuid()}`)
   })
 
-  skillData.publicCommand('generate a random decimal number: `random <number|float>[ between <min> and <max>]`')
-  skillData.publicCommand('generate a random integer: `random <int|integer>[ between <min> and <max>]`')
+  skillData.publicCommand('generate a random number: `random <number|float|int|integer>[ between <min> and <max>]`')
   skillData.publicCommand('randomize into groups: `randomize into <int> groups: <comma-separated-list>`')
   skillData.publicCommand('generate random bytes: `generate <int> random bytes in <hex|base64>`')
   skillData.publicCommand('generate a UUID (v4, a.k.a. GUID): `generate <uuid|guid>`')
