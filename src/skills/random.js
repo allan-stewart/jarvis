@@ -1,5 +1,6 @@
 const random = require('../random')
 const colors = require('../colors')
+const uuid = require('uuid/v4')
 
 module.exports = (controller, skillData) => {
 
@@ -36,16 +37,21 @@ module.exports = (controller, skillData) => {
     })
   })
 
-  controller.hears([/generate (\d+) random bytes in (hex|hexadecimal|base64)/i,], ['direct_message','direct_mention','mention'], (bot, message) => {
+  controller.hears([/generate (\d+) random bytes in (hex|hexadecimal|base64)/i], ['direct_message','direct_mention','mention'], (bot, message) => {
     let count = parseInt(message.match[1], 10)
     let output = message.match[2]
     bot.reply(message, `${random.generateBytes(count).toString(output)}`)
+  })
+
+  controller.hears([/generate (guid|uuid)/i], ['direct_message','direct_mention','mention'], (bot, message) => {
+    bot.reply(message, `${uuid()}`)
   })
 
   skillData.publicCommand('generate a random decimal number: `random <number|float>[ between <min> and <max>]`')
   skillData.publicCommand('generate a random integer: `random <int|integer>[ between <min> and <max>]`')
   skillData.publicCommand('randomize into groups: `randomize into <int> groups: <comma-separated-list>`')
   skillData.publicCommand('generate random bytes: `generate <int> random bytes in <hex|base64>`')
+  skillData.publicCommand('generate a UUID (v4, a.k.a. GUID): `generate <uuid|guid>`')
 }
 
 const groupArray = (array, numberOfGroups) => {
