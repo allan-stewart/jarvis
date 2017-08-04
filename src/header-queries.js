@@ -32,8 +32,13 @@ exports.get = (name) => {
 }
 
 exports.add = (name, headers, url) => {
+  exports.remove(name)
   queries.push({name, headers, url})
   storage.save({id: storageId, queries})
+}
+
+exports.remove = (name) => {
+  queries = queries.filter(x => x.name != name)
 }
 
 exports.execute = (name, callback) => {

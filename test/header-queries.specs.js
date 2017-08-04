@@ -50,7 +50,7 @@ describe('header-queries', () => {
     })
   })
 
-  describe('getQuery', () => {
+  describe('get', () => {
     it('should return the query if it matches the name', () => {
       assert.deepEqual(headerQueries.get('a query'), initialData[0])
     })
@@ -60,7 +60,7 @@ describe('header-queries', () => {
     })
   })
 
-  describe('addQuery', () => {
+  describe('add', () => {
     const newName = 'new query'
     const newHeaders = ['version']
     const newUrl = 'http://example.com/healthcheck'
@@ -76,6 +76,27 @@ describe('header-queries', () => {
     it('should have one more query than the initial load', () => {
       assert.equal(initialData.length, 1)
       assert.equal(headerQueries.getAll().length, initialData.length + 1)
+    })
+
+    it('should replace an existing item', () => {
+      headerQueries.add(initialData[0].name, ['new'], 'http://example.com/new')
+      const expected = [
+        {name: newName, headers: newHeaders, url: newUrl},
+        {name: 'a query', headers: ['new'], url: 'http://example.com/new'}
+      ]
+      assert.deepEqual(headerQueries.getAll(), expected)
+    })
+  })
+
+  describe('remove', () => {
+    it('should remove a matching query', () => {
+      headerQueries.remove(initialData[0].name)
+      assert.equal(headerQueries.getAll().length, 0)
+    })
+
+    it('should not remove a non-matching query', () => {
+      headerQueries.remove('some other query')
+      assert.equal(headerQueries.getAll().length, 1)
     })
   })
 

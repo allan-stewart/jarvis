@@ -11,6 +11,11 @@ module.exports = (controller, skillData) => {
     register(bot, message, query, headers, url)
   })
 
+  controller.hears([/remove headers query "(.*?)"$/i], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
+    let query = message.match[1]
+    remove(bot, message, query)
+  })
+
   controller.hears([/list header queries/i], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
     list(bot, message)
   })
@@ -21,6 +26,7 @@ module.exports = (controller, skillData) => {
   })
 
   skillData.restrictedCommand('register headers query: `register headers query "<name>": headers: <comma-delimited-list>, url: <url>`')
+  skillData.restrictedCommand('remove headers query: `remove headers query "<name>"')
   skillData.publicCommand('list available header queries: `list header queries`')
   skillData.publicCommand('execute headers query: `get headers for <queryName>`')
 }
@@ -32,6 +38,16 @@ const register = (bot, message, query, headers, url) => {
     bot.reply(message, `The query for ${query} has been added, ${admin.honorific}.`)
   } else {
     bot.reply("I'm afraid you do not have the privilages to do that.")
+  }
+}
+
+const remove = (bot, message, query) => {
+  let admin = admins.getAdmin(message.user)
+  if (admin) {
+    headerQueries.remove(query)
+    bot.reply(message, `The query for ${query} has been removed, ${admin.honorific}.`)
+  } else {
+    bot.reply("I'm sorry, but I cannot allow you to do that.")
   }
 }
 
