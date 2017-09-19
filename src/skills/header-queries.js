@@ -82,7 +82,7 @@ const execute = (bot, message, query) => {
 
     let text = results.statusCodes.map(x => {
       return `Status ${x.statusCode}:\n` + x.headers.map(y => `    ${y.value} (${y.count})`).join('\n')
-    }) + `\nErrors: ${results.errors}`
+    }).join('\n') + `\nErrors: ${results.errors}`
 
     bot.reply(message, {
       text: '',
