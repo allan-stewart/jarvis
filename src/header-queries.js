@@ -48,7 +48,7 @@ exports.execute = (name, callback) => {
     return
   }
   var results = []
-  callApi(query, [], 10, callback)
+  callApi(query, [], 20, callback)
 }
 
 const callApi = (query, results, callsRemaining, callback) => {
